@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import { View } from 'react-native';
 import { TextInput, Button, Text } from 'react-native-paper';
 import { AuthContext } from '../contexts/AuthContext';
+import { loginSchema } from '../validation';
 
 export default function LoginScreen({ navigation }) {
   const { login } = useContext(AuthContext);
@@ -14,17 +15,18 @@ export default function LoginScreen({ navigation }) {
     setLoading(true);
     setError('');
     try {
+      await loginSchema.validate({ email, password });
       await login(email, password);
     } catch (err) {
-      setError('Invalid credentials');
+      setError(err.response?.data?.msg || err.message || 'Invalid credentials');
     }
     setLoading(false);
   };
 
   return (
     <View style={{ padding: 16 }}>
-      <TextInput label="Email" value={email} onChangeText={setEmail} autoCapitalize="none" />
-      <TextInput label="Password" value={password} onChangeText={setPassword} secureTextEntry />
+      <TextInput label="Email" value={email} onChangeText={setEmail} autoCapitalize="none" keyboardType="email-address" />
+      <TextInput label="Password" value={password} onChangeText={setPassword} secureTextEntry style={{ marginTop: 12 }} />
       {error ? <Text style={{ color: 'red' }}>{error}</Text> : null}
       <Button mode="contained" onPress={handleLogin} loading={loading} style={{ marginTop: 16 }}>
         Login

@@ -3,6 +3,7 @@ import { View } from 'react-native';
 import { TextInput, Button, Text } from 'react-native-paper';
 import { AuthContext } from '../contexts/AuthContext';
 import api from '../api';
+import { registerSchema } from '../validation';
 
 export default function RegisterScreen({ navigation }) {
   const { login } = useContext(AuthContext);
@@ -16,16 +17,12 @@ export default function RegisterScreen({ navigation }) {
   const handleRegister = async () => {
     setLoading(true);
     setError('');
-    if (password !== confirm) {
-      setError('Passwords do not match');
-      setLoading(false);
-      return;
-    }
     try {
-      const res = await api.post('/auth/register', { name, email, password });
+      await registerSchema.validate({ name, email, password, confirm });
+      await api.post('/auth/register', { name, email, password });
       await login(email, password);
     } catch (err) {
-      setError('Registration failed');
+      setError(err.response?.data?.msg || err.message || 'Registration failed');
     }
     setLoading(false);
   };
@@ -33,9 +30,9 @@ export default function RegisterScreen({ navigation }) {
   return (
     <View style={{ padding: 16 }}>
       <TextInput label="Name" value={name} onChangeText={setName} />
-      <TextInput label="Email" value={email} onChangeText={setEmail} autoCapitalize="none" />
-      <TextInput label="Password" value={password} onChangeText={setPassword} secureTextEntry />
-      <TextInput label="Confirm Password" value={confirm} onChangeText={setConfirm} secureTextEntry />
+      <TextInput label="Email" value={email} onChangeText={setEmail} autoCapitalize="none" keyboardType="email-address" style={{ marginTop: 12 }} />
+      <TextInput label="Password" value={password} onChangeText={setPassword} secureTextEntry style={{ marginTop: 12 }} />
+      <TextInput label="Confirm Password" value={confirm} onChangeText={setConfirm} secureTextEntry style={{ marginTop: 12 }} />
       {error ? <Text style={{ color: 'red' }}>{error}</Text> : null}
       <Button mode="contained" onPress={handleRegister} loading={loading} style={{ marginTop: 16 }}>
         Register

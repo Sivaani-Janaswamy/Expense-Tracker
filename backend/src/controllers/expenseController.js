@@ -1,4 +1,5 @@
 const Expense = require('../models/Expense');
+const mongoose = require('mongoose');
 
 // Get all expenses for user
 exports.getExpenses = async (req, res) => {
@@ -70,7 +71,7 @@ exports.deleteExpense = async (req, res) => {
 exports.getSummary = async (req, res) => {
   try {
     const summary = await Expense.aggregate([
-      { $match: { user: req.user } },
+      { $match: { user: new mongoose.Types.ObjectId(req.user) } },
       { $group: { _id: '$category', total: { $sum: '$amount' } } },
       { $project: { category: '$_id', total: 1, _id: 0 } }
     ]);

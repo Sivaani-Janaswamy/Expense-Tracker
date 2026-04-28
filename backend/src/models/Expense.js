@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const CATEGORIES = ['Food', 'Transport', 'Shopping', 'Bills', 'Health', 'Entertainment', 'Other'];
 
 const ExpenseSchema = new mongoose.Schema({
   user: {
@@ -8,18 +9,22 @@ const ExpenseSchema = new mongoose.Schema({
   },
   amount: {
     type: Number,
-    required: true
+    required: true,
+    min: 0.01
   },
   category: {
     type: String,
-    required: true
+    required: true,
+    enum: CATEGORIES
   },
   date: {
     type: Date,
     required: true
   },
   note: {
-    type: String
+    type: String,
+    maxlength: 200,
+    trim: true
   }
 }, { timestamps: true });
 

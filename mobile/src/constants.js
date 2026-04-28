@@ -1,3 +1,5 @@
+import { Platform } from 'react-native';
+
 // App-wide constants
 export const COLORS = {
   primary: '#6200ee',
@@ -19,4 +21,16 @@ export const CATEGORIES = [
   'Other',
 ];
 
-export const API_BASE_URL = 'http://localhost:5000/api'; // Change to your backend URL as needed
+const getApiHost = () => {
+  if (Platform.OS === 'web' && typeof window !== 'undefined') {
+    return window.location.hostname || 'localhost';
+  }
+
+  if (Platform.OS === 'android') {
+    return '10.0.2.2';
+  }
+
+  return 'localhost';
+};
+
+export const API_BASE_URL = `http://${getApiHost()}:5000/api`;

@@ -1,13 +1,13 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import { View } from 'react-native';
-import { TextInput, Button, HelperText } from 'react-native-paper';
+import { TextInput, Button, HelperText, Chip } from 'react-native-paper';
 import { ExpenseContext } from '../contexts/ExpenseContext';
 import { CATEGORIES } from '../constants';
-import { Picker } from '@react-native-picker/picker';
+import { expenseSchema } from '../validation';
 
 export default function EditExpenseScreen({ route, navigation }) {
   const { expense } = route.params;
-  const { fetchExpenses } = useContext(ExpenseContext);
+  const { updateExpense, deleteExpense } = useContext(ExpenseContext);
   const [amount, setAmount] = useState(expense.amount.toString());
   const [category, setCategory] = useState(expense.category);
   const [date, setDate] = useState(expense.date.slice(0, 10));
@@ -19,12 +19,24 @@ export default function EditExpenseScreen({ route, navigation }) {
     setLoading(true);
     setError('');
     try {
-      // Add API call here
-      // await api.put(`/expenses/${expense._id}`, { amount, category, date, note });
-      await fetchExpenses();
+      await expenseSchema.validate({ amount: Number(amount), category, date, note });
+      await updateExpense(expense._id, { amount: Number(amount), category, date, note });
       navigation.goBack();
     } catch (err) {
-      setError('Failed to update expense');
+      const validationError = err.response?.data?.errors?.[0]?.msg;
+      setError(validationError || err.response?.data?.msg || err.message || 'Failed to update expense');
+    }
+    setLoading(false);
+  };
+
+  const handleDelete = async () => {
+    setLoading(true);
+    setError('');
+    try {
+      await deleteExpense(expense._id);
+      navigation.goBack();
+    } catch (err) {
+      setError(err.response?.data?.msg || err.message || 'Failed to delete expense');
     }
     setLoading(false);
   };
@@ -33,15 +45,25 @@ export default function EditExpenseScreen({ route, navigation }) {
     <View style={{ padding: 16 }}>
       <TextInput label="Amount" value={amount} onChangeText={setAmount} keyboardType="numeric" />
       <HelperText type="error" visible={!!error}>{error}</HelperText>
-      <Picker selectedValue={category} onValueChange={setCategory} style={{ marginVertical: 8 }}>
+      <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginVertical: 12 }}>
         {CATEGORIES.map((cat) => (
-          <Picker.Item key={cat} label={cat} value={cat} />
+          <Chip
+            key={cat}
+            selected={category === cat}
+            onPress={() => setCategory(cat)}
+            style={{ marginBottom: 8 }}
+          >
+            {cat}
+          </Chip>
         ))}
-      </Picker>
-      <TextInput label="Date" value={date} onChangeText={setDate} />
-      <TextInput label="Note" value={note} onChangeText={setNote} />
+      </View>
+      <TextInput label="Date (YYYY-MM-DD)" value={date} onChangeText={setDate} />
+      <TextInput label="Note" value={note} onChangeText={setNote} multiline numberOfLines={3} style={{ marginTop: 12 }} />
       <Button mode="contained" onPress={handleEdit} loading={loading} style={{ marginTop: 16 }}>
         Save Changes
+      </Button>
+      <Button mode="outlined" onPress={handleDelete} disabled={loading} style={{ marginTop: 8 }}>
+        Delete Expense
       </Button>
     </View>
   );

@@ -1,7 +1,18 @@
 import React from 'react';
-import { Text } from 'react-native-paper';
+import { View } from 'react-native';
+import { Button, Text } from 'react-native-paper';
 
-export default function ErrorMessage({ error }) {
+export default function ErrorMessage({ error, onRetry }) {
   if (!error) return null;
-  return <Text style={{ color: 'red', margin: 8 }}>{error}</Text>;
+
+  return (
+    <View style={{ marginVertical: 12 }}>
+      <Text style={{ color: 'red' }}>{error}</Text>
+      {onRetry ? (
+        <Button mode="outlined" onPress={onRetry} style={{ marginTop: 8 }}>
+          Retry
+        </Button>
+      ) : null}
+    </View>
+  );
 }

@@ -1,18 +1,30 @@
 import React, { useContext, useEffect } from 'react';
-import { View, ScrollView } from 'react-native';
-import { Card, Text, ActivityIndicator } from 'react-native-paper';
+import { ScrollView, useWindowDimensions } from 'react-native';
+import { Card, Text } from 'react-native-paper';
 import { ExpenseContext } from '../contexts/ExpenseContext';
-import { CATEGORIES } from '../constants';
 import { BarChart } from 'react-native-chart-kit';
+import EmptyState from '../components/EmptyState';
+import ErrorMessage from '../components/ErrorMessage';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 export default function DashboardScreen() {
-  const { summary, fetchSummary, loading } = useContext(ExpenseContext);
+  const { summary, fetchSummary, loading, error } = useContext(ExpenseContext);
+  const { width } = useWindowDimensions();
 
   useEffect(() => {
     fetchSummary();
   }, []);
 
-  if (loading) return <ActivityIndicator />;
+  if (loading) return <LoadingSpinner />;
+  if (!summary.length) {
+    return (
+      <ScrollView contentContainerStyle={{ padding: 16 }}>
+        <Text variant="titleLarge">Category Summary</Text>
+        <ErrorMessage error={error} onRetry={fetchSummary} />
+        <EmptyState message="No expenses yet. Add your first entry to see the dashboard summary." />
+      </ScrollView>
+    );
+  }
 
   const data = {
     labels: summary.map((s) => s.category),
@@ -22,9 +34,10 @@ export default function DashboardScreen() {
   return (
     <ScrollView style={{ padding: 16 }}>
       <Text variant="titleLarge">Category Summary</Text>
+      <ErrorMessage error={error} onRetry={fetchSummary} />
       <BarChart
         data={data}
-        width={320}
+        width={Math.max(width - 32, 280)}
         height={220}
         yAxisLabel="$"
         chartConfig={{

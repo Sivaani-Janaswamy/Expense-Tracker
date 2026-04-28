@@ -2,6 +2,7 @@ const express = require('express');
 const { body } = require('express-validator');
 const router = express.Router();
 const authController = require('../controllers/authController');
+const validate = require('../middleware/validate');
 
 // Register
 router.post(
@@ -11,6 +12,7 @@ router.post(
     body('email').isEmail().withMessage('Valid email required'),
     body('password').isLength({ min: 6 }).withMessage('Min 6 chars password'),
   ],
+  validate,
   authController.register
 );
 
@@ -21,6 +23,7 @@ router.post(
     body('email').isEmail().withMessage('Valid email required'),
     body('password').exists().withMessage('Password required'),
   ],
+  validate,
   authController.login
 );
 

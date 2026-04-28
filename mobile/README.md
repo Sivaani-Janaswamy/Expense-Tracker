@@ -1,35 +1,22 @@
-# Expense Tracker Mobile App
+# Expense Tracker Mobile
 
-## Setup & Run Instructions
+## Run
 
-### Prerequisites
-- Node.js (LTS)
-- npm or yarn
-- Expo CLI (`npm install -g expo-cli`)
-
-### Install Dependencies
-```
+```bash
 cd mobile
 npm install
-```
-
-### Start the App
-```
 npx expo start
 ```
-- Use the Expo Go app on your phone to scan the QR code, or run on an emulator.
 
-### Environment
-- API base URL is set in `src/constants.js` (`API_BASE_URL`).
-- Make sure your backend server is running and accessible from your device.
+## What To Check
 
-### Features
-- JWT authentication (login/register)
-- Add, edit, delete expenses
-- Dashboard with category summary
-- Offline/network error handling
-- Loading and error states
+- Auth flow: register, login, logout
+- Expense flow: add, edit, delete
+- Dashboard summary chart
+- Empty states, retry states, and offline banner
 
----
+## Backend Requirement
 
-For backend setup, see the backend/README.md.
+The backend must be running on port `5000`.
+
+See the root [`README.md`](C:/Users/sivaa/MyFiles/vsc/major_projects/ExpenseTracker/README.md) for the full setup.
