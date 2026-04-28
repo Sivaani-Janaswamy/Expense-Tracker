@@ -27,10 +27,10 @@
 - [x] `backend/` folder init (`npm init`, dependencies)
 - [x] MongoDB connection (`config/db.js`)
 - [x] User model + Expense model
-- [ ] Auth routes: `/register`, `/login`, `/refresh`
-- [ ] JWT middleware (`middleware/auth.js`)
-- [ ] Expense routes: GET list, POST, GET by id, PUT, DELETE, GET summary
-- [ ] Global error handler
+- [x] Auth routes: `/register`, `/login`, `/refresh`
+- [x] JWT middleware (`middleware/auth.js`)
+- [x] Expense routes: GET list, POST, GET by id, PUT, DELETE, GET summary
+- [x] Global error handler
 - [x] `.env.example`
 - [ ] Smoke test all endpoints
 
