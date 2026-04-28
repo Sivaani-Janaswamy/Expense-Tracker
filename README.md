@@ -125,4 +125,4 @@ npm start
 ---
 
 ## Mobile App
-See [`backend/mobile/README.md`](../mobile/README.md) for mobile setup and usage instructions.
+See [`mobile/README.md`](../mobile/README.md) for mobile setup and usage instructions.
