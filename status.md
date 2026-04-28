@@ -59,11 +59,11 @@
 
 ### Phase 4 — Polish & Finalize
 
-- [ ] Loading states on all async actions
-- [ ] Error states + retry buttons
-- [ ] Empty state illustrations
-- [ ] Offline / network error handling (NetInfo)
-- [ ] README.md (setup + run instructions)
+- [x] Loading states on all async actions
+- [x] Error states + retry buttons
+- [x] Empty state illustrations
+- [x] Offline / network error handling (NetInfo)
+- [x] README.md (setup + run instructions)
 
 ---
 
