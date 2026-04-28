@@ -8,13 +8,13 @@
 | Backend Setup      | ✅ Done      | backend folder, npm init, dependencies installed |
 | Backend Auth API   | ⬜ Pending   |                                    |
 | Backend Expense API| ⬜ Pending   |                                    |
-| Mobile Setup       | ⬜ Pending   |                                    |
-| Mobile Auth Screens| ⬜ Pending   |                                    |
-| Mobile Navigation  | ⬜ Pending   |                                    |
-| State Management   | ⬜ Pending   |                                    |
-| Dashboard Screen   | ⬜ Pending   |                                    |
-| Expense CRUD UI    | ⬜ Pending   |                                    |
-| Profile Screen     | ⬜ Pending   |                                    |
+| Mobile Setup       | ✅ Done      |                                    |
+| Mobile Auth Screens| ✅ Done      |                                    |
+| Mobile Navigation  | ✅ Done      |                                    |
+| State Management   | ✅ Done      |                                    |
+| Dashboard Screen   | ✅ Done      |                                    |
+| Expense CRUD UI    | ✅ Done      |                                    |
+| Profile Screen     | ✅ Done      |                                    |
 | Error / Edge Cases | ⬜ Pending   |                                    |
 | README             | ⬜ Pending   |                                    |
 
@@ -32,30 +32,30 @@
 - [x] Expense routes: GET list, POST, GET by id, PUT, DELETE, GET summary
 - [x] Global error handler
 - [x] `.env.example`
-- [ ] Smoke test all endpoints
+- [x] Smoke test all endpoints
 
 ### Phase 2 — Mobile App
 
-- [ ] Expo project init
-- [ ] Install dependencies (React Navigation, Axios, Formik, Yup, AsyncStorage, react-native-chart-kit)
-- [ ] Constants (colors, categories, api base URL)
-- [ ] Axios client with interceptors
-- [ ] AuthContext + useReducer
-- [ ] ExpenseContext + useReducer
-- [ ] AppNavigator (auth guard logic)
-- [ ] AuthStack (Login + Register screens)
-- [ ] MainTabs (Dashboard, Expenses, Profile)
+- [x] Expo project init
+- [x] Install dependencies (React Navigation, Axios, Formik, Yup, AsyncStorage, react-native-chart-kit)
+- [x] Constants (colors, categories, api base URL)
+- [x] Axios client with interceptors
+- [x] AuthContext + useReducer
+- [x] ExpenseContext + useReducer
+- [x] AppNavigator (auth guard logic)
+- [x] AuthStack (Login + Register screens)
+- [x] MainTabs (Dashboard, Expenses, Profile)
 
 ### Phase 3 — Screens & Components
 
-- [ ] Common components: Button, Input, LoadingSpinner, ErrorMessage, EmptyState
-- [ ] LoginScreen (Formik + Yup)
-- [ ] RegisterScreen (Formik + Yup)
-- [ ] DashboardScreen (summary cards + chart + recent list)
-- [ ] ExpenseListScreen (FlatList + swipe-delete + category filter)
-- [ ] AddExpenseScreen (form)
-- [ ] EditExpenseScreen (pre-filled form)
-- [ ] ProfileScreen (user info + logout)
+- [x] Common components: Button, Input, LoadingSpinner, ErrorMessage, EmptyState
+- [x] LoginScreen (Formik + Yup)
+- [x] RegisterScreen (Formik + Yup)
+- [x] DashboardScreen (summary cards + chart + recent list)
+- [x] ExpenseListScreen (FlatList + swipe-delete + category filter)
+- [x] AddExpenseScreen (form)
+- [x] EditExpenseScreen (pre-filled form)
+- [x] ProfileScreen (user info + logout)
 
 ### Phase 4 — Polish & Finalize
 
